@@ -1,0 +1,59 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="margin-20">
+                <h4>Add customer</h4>
+            </div>
+            <form [formGroup]="myForm" novalidate (ngSubmit)="save(myForm)">
+                <!-- list of product -->
+                <div formArrayName="product">
+                    <div *ngFor="let address of myForm.controls.product.controls; let i=index">
+                        <!-- address header, show remove button when more than one reasons available -->
+                        <div>
+                            <span>Address {{i + 1}}</span>
+                            <span *ngIf="myForm.controls.product.controls.length > 1" (click)="removeReasons(i)">
+                    </span>
+                        </div>
+
+                        <!-- Angular assigns array index as group name by default 0, 1, 2, ... -->
+                        <div [formGroupName]="i">
+                            <!--reason-->
+                            <div>
+                                <label>Select Reason</label>
+                                <input type="text" formControlName="reason">
+                                <!--display error message if reason is not valid-->
+                                <small [hidden]="myForm.controls.product.controls[i].controls.reason.valid">
+                            Reason is required
+                        </small>
+                            </div>
+                            <!--qty-->
+                            <div>
+                                <label>Quantity</label>
+                                <input type="text" formControlName="qty">
+                            </div>
+                            <div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="margin-20">
+                    <a (click)="addReasons()" style="cursor: default">
+            Add another address +
+          </a>
+                </div>
+
+                <div class="margin-20">
+                    <button type="submit" class="btn btn-primary pull-right" [disabled]="!myForm.valid">Submit</button>
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="margin-20">
+                    <div>myForm details:-</div>
+                    <pre>Is myForm valid?: <br>{{myForm.valid | json}}</pre>
+                    <pre>form value: <br>{{myForm.value | json}}</pre>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
