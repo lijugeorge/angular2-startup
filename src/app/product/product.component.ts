@@ -12,6 +12,7 @@ export class ProductComponent implements OnInit {
 
     ngOnInit() {
         this.myForm = this._fb.group({
+            name: ['', [Validators.required, Validators.minLength(5)]],
             product: this._fb.array([])
         });
         this.addReasons();
